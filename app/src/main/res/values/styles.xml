@@ -1,0 +1,23 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="MyBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/colorText</item>
+        <item name="itemTextColor">@color/colorText</item>
+        <item name="itemTextAppearanceActive">@style/MyBottomNavigationView.TextAppearance</item>
+        <item name="itemTextAppearanceInactive">@style/MyBottomNavigationView.TextAppearance</item>
+    </style>
+
+    <style name="MyBottomNavigationView.TextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">@dimen/text_sixteen_sp</item>
+    </style>
+
+</resources>
