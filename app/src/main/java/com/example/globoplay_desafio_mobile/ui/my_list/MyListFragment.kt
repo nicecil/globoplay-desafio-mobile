@@ -10,7 +10,6 @@ import com.example.globoplay_desafio_mobile.R
 
 class MyListFragment : Fragment() {
 
-//    private lateinit var myListViewModel: MyListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,

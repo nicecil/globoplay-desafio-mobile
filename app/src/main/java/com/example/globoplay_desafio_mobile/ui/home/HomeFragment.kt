@@ -6,16 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.globoplay_desafio_mobile.R
 import com.example.globoplay_desafio_mobile.repository.MovieRepository
 import com.example.globoplay_desafio_mobile.repository.MovieResponse
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment(), MovieRepository.MovieListListener {
 
-    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,17 +27,27 @@ class HomeFragment : Fragment(), MovieRepository.MovieListListener {
             false
         )
 
+        var movieRepository: MovieRepository = MovieRepository()
 
+        val textView: TextView = root.findViewById(R.id.home_fragment_text_view)
+        textView.text = "HOME TEXT"
 
-        text_home.text = "HOME TEXT"
+        textView.setOnClickListener(View.OnClickListener {
+            textView.text = "clicked"
+            movieRepository.retrieveMovieDiscover(this)
+
+        })
+
+//        home_fragment_text_view.setText("HOME TEXT")
 
         return root
     }
 
     override fun onListFound(response: List<MovieResponse>?) {
-
+        home_fragment_text_view.setText("GOT A LIST")
     }
 
     override fun onGeneralError(message: String) {
+        home_fragment_text_view.text = "ERROR"
     }
 }
