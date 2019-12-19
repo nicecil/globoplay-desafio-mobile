@@ -1,24 +1,21 @@
 package com.example.globoplay_desafio_mobile.ui.home
 
+//
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.globoplay_desafio_mobile.R
-import com.example.globoplay_desafio_mobile.repository.MovieRepository
 import com.example.globoplay_desafio_mobile.repository.MovieResponse
 import com.example.globoplay_desafio_mobile.ui.view.AdapterHomeFragmentRecyclerView
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : Fragment(),
-    MovieRepository.MovieListListener,
+class HomeFragment : Fragment(), HomeFragmentView,
     AdapterHomeFragmentRecyclerView.MovieInterface {
 
+    var eventHandler: HomeFragmentPresenterInterface? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,20 +29,24 @@ class HomeFragment : Fragment(),
             false
         )
 
-        var movieRepository: MovieRepository = MovieRepository()
-
-        movieRepository.retrieveMovieDiscover(this)
-
-
+        eventHandler = HomeFragmentPresenter(this)
+        eventHandler?.attachView(this)
+        eventHandler?.makeRequest()
         return root
     }
 
-    override fun onListFound(response: List<MovieResponse>?) {
+    override fun getLayoutResource(): Int {
+        return R.layout.fragment_home
+    }
 
-        val movieList: Array<MovieResponse>? = response?.toTypedArray()
+    override fun populateRecyclerView(movieList: Array<MovieResponse>?) {
         with(home_fragment_movie_recycler_view) {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
             movieList?.let {
                 adapter = AdapterHomeFragmentRecyclerView(
                     movieList,
@@ -55,10 +56,19 @@ class HomeFragment : Fragment(),
         }
     }
 
-    override fun onGeneralError(message: String) {
-    }
 
     override fun onMovieClicked(movie: MovieResponse) {
 //        Toast.makeText(this, movie.movieTitle, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showLoading() {
+        loading_layout?.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        loading_layout?.visibility = View.GONE
+    }
+
+    override fun showMovieDetailsActivity(movie: MovieResponse) {
     }
 }
