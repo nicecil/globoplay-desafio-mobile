@@ -38,12 +38,18 @@ class AdapterHomeFragmentRecyclerView(
         val baseUrl = BASE_IMAGE_URL
         val imageUrl = movieList[position].poster
         holder.apply {
-            Picasso.get().load(baseUrl + imageUrl)
+            Picasso.get()
+                .load(baseUrl + imageUrl)
+                .centerCrop()
+                .fit()
+                .into(moviePoster)
+            movieTitle.text = movieList[position].movieTitle
         }
     }
 
     class ViewHolderMovies(val view: View) : RecyclerView.ViewHolder(view) {
         val moviePoster = view.layout_viewholder_home_fragment_image_view
+        val movieTitle = view.layout_viewholder_home_fragment_text_test
     }
 
     interface MovieInterface {
