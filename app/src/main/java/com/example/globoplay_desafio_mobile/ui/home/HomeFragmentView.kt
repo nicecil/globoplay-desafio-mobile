@@ -6,9 +6,14 @@ interface HomeFragmentView {
     fun showLoading()
     fun hideLoading()
 
+    fun showError(message: String)
+
     fun getLayoutResource(): Int
 
-    fun populateRecyclerView(movieList: Array<MovieResponse>?)
+    fun populateMovieRecyclerView(movieList: Array<MovieResponse>?)
+
+    fun populateTvRecyclerView(tvList: Array<MovieResponse>?)
+
     fun showMovieDetailsActivity(movie: MovieResponse)
 
 }

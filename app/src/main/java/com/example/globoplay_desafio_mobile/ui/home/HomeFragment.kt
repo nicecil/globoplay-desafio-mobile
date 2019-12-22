@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.globoplay_desafio_mobile.R
@@ -39,7 +40,7 @@ class HomeFragment : Fragment(), HomeFragmentView,
         return R.layout.fragment_home
     }
 
-    override fun populateRecyclerView(movieList: Array<MovieResponse>?) {
+    override fun populateMovieRecyclerView(movieList: Array<MovieResponse>?) {
         with(home_fragment_movie_recycler_view) {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(
@@ -56,6 +57,24 @@ class HomeFragment : Fragment(), HomeFragmentView,
         }
     }
 
+    override fun populateTvRecyclerView(tvList: Array<MovieResponse>?) {
+        with(home_fragment_tv_recycler_view) {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            tvList?.let {
+                adapter = AdapterHomeFragmentRecyclerView(
+                    tvList,
+                    this@HomeFragment
+                )
+            }
+
+        }
+    }
+
 
     override fun onMovieClicked(movie: MovieResponse) {
 //        Toast.makeText(this, movie.movieTitle, Toast.LENGTH_LONG).show()
@@ -67,6 +86,10 @@ class HomeFragment : Fragment(), HomeFragmentView,
 
     override fun hideLoading() {
         loading_layout?.visibility = View.GONE
+    }
+
+    override fun showError(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG)
     }
 
     override fun showMovieDetailsActivity(movie: MovieResponse) {

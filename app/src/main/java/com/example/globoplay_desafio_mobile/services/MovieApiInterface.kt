@@ -12,4 +12,10 @@ interface MovieApiInterface {
         @Query("api_key")
         api_key: String = API_KEY
     ): Call<MovieDiscoverResponse>
+
+    @GET("discover/tv")
+    fun getTVRecommendations(
+        @Query("api_key")
+        api_key: String = API_KEY
+    ): Call<MovieDiscoverResponse>
 }

@@ -13,14 +13,14 @@ class MovieRepository {
     }
 
     fun retrieveMovieDiscover(listener: MovieListListener) {
-        apiMovie?.getMovieDiscover(object: BaseCallback<MovieDiscoverResponse>{
+        apiMovie?.getMovieDiscover(object : BaseCallback<MovieDiscoverResponse> {
             override fun onResponse(response: Response<MovieDiscoverResponse>) {
                 val statusCode = response.code()
                 val body = response.body()
 
                 when (statusCode) {
                     StatusCode.SUCCESS.value -> {
-                        listener.onListFound(body?.movieList)
+                        listener.onMovieListFound(body?.movieList)
                     }
                     else -> {
                         listener.onGeneralError("Erro na chamada da rota /discover/movie")
@@ -36,8 +36,33 @@ class MovieRepository {
         })
     }
 
+    fun retrieveTvDiscover(listener: MovieListListener) {
+        apiMovie?.getTvDiscover(object : BaseCallback<MovieDiscoverResponse> {
+            override fun onResponse(response: Response<MovieDiscoverResponse>) {
+                val statusCode = response.code()
+                val body = response.body()
+
+                when (statusCode) {
+                    StatusCode.SUCCESS.value -> {
+                        listener.onTvListFound(body?.movieList)
+                    }
+                    else -> {
+                        listener.onGeneralError("Erro na chamada da rota /discover/tv")
+                    }
+                }
+            }
+
+            override fun onGeneralError(call: Call<MovieDiscoverResponse>, t: Throwable) {
+                listener.onGeneralError("Erro na chamada da API")
+            }
+
+        })
+    }
+
     interface MovieListListener {
-        fun onListFound(response: List<MovieResponse>? = emptyList())
+        fun onMovieListFound(response: List<MovieResponse>? = emptyList())
+
+        fun onTvListFound(response: List<MovieResponse>? = emptyList())
 
         fun onGeneralError(message: String)
     }

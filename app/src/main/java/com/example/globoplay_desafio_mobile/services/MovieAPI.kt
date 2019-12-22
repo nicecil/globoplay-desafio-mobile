@@ -26,4 +26,23 @@ class MovieAPI {
 
         })
     }
+
+    fun getTvDiscover(callback: BaseCallback<MovieDiscoverResponse>) {
+        val tvAPI = RetrofitUtil().api().create(MovieApiInterface::class.java)
+
+        val call = tvAPI.getTVRecommendations()
+
+        call.enqueue(object: retrofit2.Callback<MovieDiscoverResponse> {
+            override fun onFailure(call: Call<MovieDiscoverResponse>, t:Throwable) {
+                callback.onGeneralError(call, t)
+            }
+
+            override fun onResponse(
+                call: Call<MovieDiscoverResponse>,
+                response: Response<MovieDiscoverResponse>
+            ) {
+                callback.onResponse(response)
+            }
+        })
+    }
 }
