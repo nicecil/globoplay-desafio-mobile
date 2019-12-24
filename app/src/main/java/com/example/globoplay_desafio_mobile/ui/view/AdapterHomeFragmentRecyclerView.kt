@@ -46,7 +46,19 @@ class AdapterHomeFragmentRecyclerView(
                 .centerCrop()
                 .fit()
                 .into(moviePoster)
+            moviePoster.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(vew: View?) {
+                    when (view?.id) {
+                        R.id.layout_viewholder_home_fragment_image_view -> {
+                            movieInterface?.onMovieClicked(movieList[position])
+                        }
+                    }
+                }
+
+            })
         }
+
+
     }
 
     class ViewHolderMovies(val view: View) : RecyclerView.ViewHolder(view) {

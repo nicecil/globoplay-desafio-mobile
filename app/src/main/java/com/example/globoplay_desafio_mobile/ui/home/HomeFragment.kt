@@ -77,7 +77,7 @@ class HomeFragment : Fragment(), HomeFragmentView,
 
 
     override fun onMovieClicked(movie: MovieResponse) {
-//        Toast.makeText(this, movie.movieTitle, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, movie.movieTitle, Toast.LENGTH_LONG).show()
     }
 
     override fun showLoading() {
